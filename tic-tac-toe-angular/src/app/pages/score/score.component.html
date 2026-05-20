@@ -1,0 +1,102 @@
+<section class="results shell" *ngIf="scores">
+  <header class="results__header">
+    <span class="eyebrow">Tally · Vol. 01</span>
+    <h2 class="results__title">
+      The <em>standings</em>, as recorded.
+    </h2>
+    <p class="results__lede">
+      A persistent log of all rounds played in this browser.
+      <span>Last updated {{ updatedAtLabel }}.</span>
+    </p>
+  </header>
+
+  <!-- If a round just ended, headline the outcome -->
+  <article
+    class="result-card"
+    *ngIf="state && (state.status === 'won' || state.status === 'draw')"
+    [class.result-card--won]="state.status === 'won'"
+    [class.result-card--draw]="state.status === 'draw'"
+  >
+    <span class="eyebrow">Latest outcome</span>
+    <p class="result-card__line">
+      <ng-container *ngIf="state.status === 'won'">
+        <em>{{ state.winner }}</em> took the round in {{ state.moveCount }} moves.
+      </ng-container>
+      <ng-container *ngIf="state.status === 'draw'">
+        A drawn round. <em>No line found.</em>
+      </ng-container>
+    </p>
+  </article>
+
+  <!-- Scoreboard cards -->
+  <div class="board">
+    <article class="board__card board__card--x">
+      <header>
+        <span class="board__mark">×</span>
+        <span class="eyebrow">Player X</span>
+      </header>
+      <div class="board__value">{{ scores.x }}</div>
+      <div class="board__share">
+        <div class="board__bar" [style.width.%]="share(scores.x)"></div>
+      </div>
+      <footer>
+        <span class="board__share-label">{{ share(scores.x) }}% of rounds</span>
+      </footer>
+    </article>
+
+    <article class="board__card board__card--draw">
+      <header>
+        <span class="board__mark">—</span>
+        <span class="eyebrow">Draws</span>
+      </header>
+      <div class="board__value">{{ scores.draws }}</div>
+      <div class="board__share">
+        <div class="board__bar board__bar--neutral" [style.width.%]="share(scores.draws)"></div>
+      </div>
+      <footer>
+        <span class="board__share-label">{{ share(scores.draws) }}% of rounds</span>
+      </footer>
+    </article>
+
+    <article class="board__card board__card--o">
+      <header>
+        <span class="board__mark">○</span>
+        <span class="eyebrow">Player O</span>
+      </header>
+      <div class="board__value">{{ scores.o }}</div>
+      <div class="board__share">
+        <div class="board__bar board__bar--blue" [style.width.%]="share(scores.o)"></div>
+      </div>
+      <footer>
+        <span class="board__share-label">{{ share(scores.o) }}% of rounds</span>
+      </footer>
+    </article>
+  </div>
+
+  <!-- Totals strip -->
+  <div class="totals">
+    <div>
+      <span class="eyebrow">Total rounds</span>
+      <p>{{ scores.rounds }}</p>
+    </div>
+    <div>
+      <span class="eyebrow">Leader</span>
+      <p>
+        <ng-container *ngIf="scores.x > scores.o">Player <em class="is-x">X</em></ng-container>
+        <ng-container *ngIf="scores.o > scores.x">Player <em class="is-o">O</em></ng-container>
+        <ng-container *ngIf="scores.o === scores.x">Even</ng-container>
+      </p>
+    </div>
+    <div>
+      <span class="eyebrow">Margin</span>
+      <p>{{ scores.x === scores.o ? '0' : (scores.x > scores.o ? scores.x - scores.o : scores.o - scores.x) }}</p>
+    </div>
+  </div>
+
+  <!-- Actions -->
+  <div class="actions">
+    <app-button variant="primary" size="lg" (press)="playAgain()">Play another round</app-button>
+    <app-button variant="ghost" size="lg" (press)="goHome()">Back to home</app-button>
+    <app-button variant="outline" size="md" (press)="clearTally()">Reset tally</app-button>
+  </div>
+</section>

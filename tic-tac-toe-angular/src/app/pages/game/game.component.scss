@@ -1,0 +1,110 @@
+:host { display: block; }
+
+.play {
+  display: grid;
+  gap: clamp(20px, 3vw, 32px);
+
+  &__header {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 6px;
+  }
+
+  &__title {
+    font-family: var(--font-display);
+    font-weight: 400;
+    font-size: clamp(32px, 4.5vw, 52px);
+    line-height: 1;
+    letter-spacing: -0.025em;
+    color: var(--ink);
+    margin: 0;
+    font-variation-settings: 'opsz' 144, 'SOFT' 40;
+    em {
+      font-style: italic;
+      color: var(--blue-700);
+      font-variation-settings: 'opsz' 144, 'SOFT' 100;
+    }
+  }
+
+  &__board-wrap {
+    position: relative;
+    /* center board horizontally with constrained width for readability */
+    display: grid;
+    place-items: center;
+  }
+
+  &__board-wrap app-grid {
+    width: min(560px, 100%);
+  }
+
+  /* ----- Result overlay (won / draw) ------------------------- */
+  &__result {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    place-content: center;
+    text-align: center;
+    background: rgba(245, 241, 232, 0.78);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border-radius: var(--r-xl);
+    padding: 32px;
+    animation: resultIn 480ms var(--ease-out) both;
+  }
+
+  &__result-line {
+    font-family: var(--font-display);
+    font-size: clamp(26px, 3.6vw, 42px);
+    line-height: 1.1;
+    color: var(--ink);
+    margin: 10px 0 22px;
+    em {
+      font-style: italic;
+      color: var(--accent);
+    }
+  }
+
+  &__result-actions {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  /* ----- footnotes row -------------------------------------- */
+  &__footnotes {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 18px;
+    border-top: 1px solid var(--line-soft);
+    padding-top: 18px;
+    margin-top: 8px;
+
+    > div { display: flex; flex-direction: column; gap: 4px; }
+
+    p {
+      margin: 0;
+      font-family: var(--font-display);
+      font-size: 18px;
+      color: var(--ink);
+      font-variation-settings: 'opsz' 144;
+      em {
+        font-style: italic;
+        font-weight: 500;
+        &.is-x { color: var(--accent); }
+        &.is-o { color: var(--blue-700); }
+      }
+    }
+  }
+}
+
+@keyframes resultIn {
+  from { opacity: 0; transform: scale(0.96); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+@media (max-width: 600px) {
+  .play__footnotes { grid-template-columns: 1fr 1fr; }
+  .play__footnotes > div:last-child { grid-column: 1 / -1; }
+}

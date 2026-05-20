@@ -1,0 +1,104 @@
+/* ----- cell tile ----------------------------------------------------- */
+.cell {
+  position: relative;
+  aspect-ratio: 1 / 1;
+  display: grid;
+  place-items: center;
+  background: var(--paper);
+  border-radius: var(--r-lg);
+  box-shadow: var(--shadow-sm), inset 0 0 0 1px var(--line-soft);
+  cursor: pointer;
+  user-select: none;
+  overflow: hidden;
+  transition:
+    transform 240ms var(--ease-out),
+    box-shadow 260ms var(--ease-out),
+    background 260ms var(--ease-out);
+
+  /* board entrance — each cell rises in with a stagger via --enter-delay */
+  animation: cellRise 540ms var(--ease-out) both;
+  animation-delay: var(--enter-delay, 0ms);
+
+  &:hover:not(.cell--disabled):not(.cell--x):not(.cell--o) {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-md), inset 0 0 0 1px var(--blue-300);
+    background: var(--blue-50);
+
+    .cell__label { color: var(--blue-700); opacity: 0.7; }
+  }
+
+  &--x, &--o, &--disabled {
+    cursor: default;
+  }
+
+  /* highlight winning cells with a warm gold halo */
+  &--win {
+    background: linear-gradient(180deg, #fdf6e6 0%, var(--paper) 80%);
+    box-shadow:
+      var(--shadow-md),
+      inset 0 0 0 1.5px var(--gold);
+    animation: cellWin 720ms var(--ease-out) both;
+  }
+}
+
+/* ----- index label (1..9) for empty cells --------------------------- */
+.cell__label {
+  font-family: var(--font-mono);
+  font-size: clamp(11px, 1.5vw, 13px);
+  letter-spacing: 0.1em;
+  color: var(--muted);
+  opacity: 0.35;
+  position: absolute;
+  top: 12px;
+  left: 14px;
+  transition: opacity 200ms var(--ease-out), color 200ms var(--ease-out);
+}
+
+/* ----- X / O glyph shared --------------------------------------- */
+.glyph {
+  width: 64%;
+  height: 64%;
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 7;
+}
+
+/* X — terracotta, two diagonal strokes draw in sequentially */
+.glyph--x {
+  stroke: var(--accent);
+  path {
+    stroke-dasharray: 100;
+    stroke-dashoffset: 100;
+    animation: drawStroke 380ms var(--ease-out) forwards;
+  }
+  path:nth-child(2) {
+    animation-delay: 220ms;
+  }
+}
+
+/* O — deep blue circle, also draws in */
+.glyph--o {
+  stroke: var(--blue-700);
+  circle {
+    stroke-dasharray: 190;
+    stroke-dashoffset: 190;
+    animation: drawStroke 520ms var(--ease-out) forwards;
+  }
+}
+
+/* ----- keyframes -------------------------------------------------- */
+@keyframes cellRise {
+  from { opacity: 0; transform: translateY(18px) scale(0.96); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@keyframes cellWin {
+  0%   { transform: translateY(0) scale(1); }
+  35%  { transform: translateY(-6px) scale(1.04); }
+  100% { transform: translateY(0) scale(1); }
+}
+
+@keyframes drawStroke {
+  to { stroke-dashoffset: 0; }
+}

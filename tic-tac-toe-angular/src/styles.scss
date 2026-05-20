@@ -1,0 +1,137 @@
+/* =====================================================================
+   GLOBAL STYLES — design tokens, resets, and shared utilities.
+   Aesthetic: editorial modernism. Deep blue ink on warm bone paper.
+   Typography pairs Fraunces (display serif) with Hanken Grotesk (sans).
+   ===================================================================== */
+
+:root {
+  /* --- color: a refined blue narrative on warm cream --------------- */
+  --paper:        #f5f1e8;     /* canvas — slightly warm bone */
+  --paper-2:      #efeadc;     /* slightly deeper paper for layering */
+  --ink:          #0a1428;     /* near-black with blue undertone */
+  --ink-soft:     #1f2a44;
+  --muted:        #5a6781;
+
+  --blue-50:      #eef3ff;
+  --blue-100:     #dbe5ff;
+  --blue-300:     #8cabff;
+  --blue-500:     #3b6bdb;
+  --blue-700:     #1e3a8a;     /* core brand blue */
+  --blue-900:     #0a1f5c;
+
+  --accent:       #d96a5a;     /* terracotta — for X */
+  --gold:         #c9a86a;     /* soft gold — editorial accent */
+  --line:         rgba(10, 20, 40, 0.12);
+  --line-soft:    rgba(10, 20, 40, 0.06);
+
+  /* --- shadows — architectural, low and layered ------------------- */
+  --shadow-sm:  0 1px 2px rgba(10,20,40,0.04), 0 1px 3px rgba(10,20,40,0.06);
+  --shadow-md:  0 2px 4px rgba(10,20,40,0.05), 0 8px 24px rgba(10,20,40,0.08);
+  --shadow-lg:  0 4px 8px rgba(10,20,40,0.06), 0 24px 48px rgba(10,20,40,0.12);
+  --shadow-inset: inset 0 2px 4px rgba(10,20,40,0.05);
+
+  /* --- radii — generous and soft --------------------------------- */
+  --r-sm: 8px;
+  --r-md: 16px;
+  --r-lg: 28px;
+  --r-xl: 44px;
+  --r-pill: 999px;
+
+  /* --- type ------------------------------------------------------ */
+  --font-display: 'Fraunces', 'Iowan Old Style', Georgia, serif;
+  --font-body:    'Hanken Grotesk', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-mono:    'JetBrains Mono', ui-monospace, 'SF Mono', monospace;
+
+  /* --- motion ---------------------------------------------------- */
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+}
+
+/* ----- reset --------------------------------------------------------- */
+*,
+*::before,
+*::after { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.55;
+  font-feature-settings: 'ss01', 'cv11';
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+/* Subtle paper grain — gives surface texture without noise */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image:
+    radial-gradient(circle at 12% 18%, rgba(10,31,92,0.04) 0, transparent 40%),
+    radial-gradient(circle at 88% 78%, rgba(217,106,90,0.04) 0, transparent 45%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+button { font: inherit; color: inherit; }
+a {
+  color: var(--blue-700);
+  text-decoration: none;
+  transition: color 160ms var(--ease-out);
+}
+a:hover { color: var(--accent); }
+
+h1, h2, h3, h4 {
+  font-family: var(--font-display);
+  font-weight: 400;
+  letter-spacing: -0.02em;
+  margin: 0;
+  color: var(--ink);
+}
+
+/* ----- utilities ----------------------------------------------------- */
+.shell {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 clamp(20px, 4vw, 48px);
+  position: relative;
+  z-index: 1;
+}
+
+.eyebrow {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+/* ----- page transition --------------------------------------------- */
+@keyframes pageRise {
+  from { opacity: 0; transform: translateY(14px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+router-outlet + * {
+  display: block;
+  animation: pageRise 480ms var(--ease-out) both;
+}
+
+/* ----- focus ring --------------------------------------------------- */
+:focus-visible {
+  outline: 2px solid var(--blue-500);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+/* ----- selection ---------------------------------------------------- */
+::selection {
+  background: var(--blue-700);
+  color: var(--paper);
+}

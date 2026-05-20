@@ -1,0 +1,98 @@
+:host {
+  display: block;
+  position: sticky;
+  top: 0;
+  z-index: 30;
+  background: rgba(245, 241, 232, 0.78);
+  backdrop-filter: blur(12px) saturate(140%);
+  -webkit-backdrop-filter: blur(12px) saturate(140%);
+  border-bottom: 1px solid var(--line-soft);
+}
+
+.header {
+  &__inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 32px;
+    padding-top: 18px;
+    padding-bottom: 18px;
+  }
+}
+
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+  color: var(--blue-700);
+  text-decoration: none;
+
+  &__mark {
+    display: grid;
+    place-items: center;
+    width: 44px;
+    height: 44px;
+    border-radius: var(--r-md);
+    background: var(--paper-2);
+    box-shadow: var(--shadow-sm);
+    transition: transform 280ms var(--ease-out);
+  }
+  &:hover &__mark { transform: rotate(-8deg); }
+
+  &__type {
+    display: flex;
+    flex-direction: column;
+    line-height: 1;
+  }
+  &__word {
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: 26px;
+    font-variation-settings: 'opsz' 144, 'SOFT' 50;
+    letter-spacing: -0.02em;
+    color: var(--ink);
+  }
+  &__sub {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-top: 4px;
+  }
+}
+
+.nav {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+
+  a {
+    display: inline-flex;
+    align-items: center;
+    padding: 8px 16px;
+    border-radius: var(--r-pill);
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--ink-soft);
+    transition:
+      color 200ms var(--ease-out),
+      background 200ms var(--ease-out);
+
+    &:hover {
+      color: var(--blue-700);
+      background: var(--blue-50);
+    }
+
+    &.is-active {
+      color: var(--paper);
+      background: var(--ink);
+    }
+  }
+}
+
+@media (max-width: 540px) {
+  .brand__sub { display: none; }
+  .nav a { padding: 8px 12px; font-size: 13px; }
+  .header__inner { gap: 12px; }
+}

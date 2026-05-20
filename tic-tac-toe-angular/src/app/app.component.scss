@@ -1,0 +1,17 @@
+:host {
+  display: block;
+  min-height: 100vh;
+}
+
+.app {
+  min-height: 100vh;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  position: relative;
+  z-index: 1;
+
+  &__main {
+    padding: clamp(24px, 4vw, 56px) 0;
+    position: relative;
+  }
+}

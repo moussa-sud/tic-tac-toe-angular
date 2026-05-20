@@ -1,0 +1,60 @@
+<section class="play shell" *ngIf="state && scores">
+  <header class="play__header">
+    <span class="eyebrow">Round in session</span>
+    <h2 class="play__title">
+      Place a mark. <em>Hold the line.</em>
+    </h2>
+  </header>
+
+  <app-game-hud
+    [state]="state"
+    [scores]="scores"
+    (restart)="onRestart()"
+  />
+
+  <div class="play__board-wrap">
+    <app-grid
+      [board]="state.board"
+      [winningLine]="state.winningLine"
+      [locked]="isOver"
+      (pick)="onPick($event)"
+    />
+
+    <!-- Result overlay — appears once the round closes -->
+    <div class="play__result" *ngIf="isOver" role="status" aria-live="polite">
+      <span class="eyebrow">{{ state.status === 'won' ? 'Victory' : 'Stalemate' }}</span>
+      <p class="play__result-line">
+        <ng-container *ngIf="state.status === 'won'">
+          <em>{{ state.winner }}</em> closed the board.
+        </ng-container>
+        <ng-container *ngIf="state.status === 'draw'">
+          No line found. <em>Try again?</em>
+        </ng-container>
+      </p>
+      <div class="play__result-actions">
+        <app-button variant="primary" (press)="onRestart()">Play another</app-button>
+        <app-button variant="outline" (press)="viewResults()">See full tally</app-button>
+      </div>
+    </div>
+  </div>
+
+  <footer class="play__footnotes">
+    <div>
+      <span class="eyebrow">Move count</span>
+      <p>{{ state.moveCount }} / 9</p>
+    </div>
+    <div>
+      <span class="eyebrow">Now playing</span>
+      <p>
+        <em [class.is-x]="state.currentPlayer === 'X'" [class.is-o]="state.currentPlayer === 'O'">
+          {{ state.currentPlayer }}
+        </em>
+        @if (!isOver) { to move } @else { — round ended }
+      </p>
+    </div>
+    <div>
+      <span class="eyebrow">Total rounds</span>
+      <p>{{ scores.rounds }}</p>
+    </div>
+  </footer>
+</section>

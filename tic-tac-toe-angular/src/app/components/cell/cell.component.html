@@ -1,0 +1,44 @@
+<div
+  class="cell"
+  [class.cell--empty]="value === null"
+  [class.cell--x]="value === 'X'"
+  [class.cell--o]="value === 'O'"
+  [class.cell--win]="winning"
+  [class.cell--disabled]="disabled"
+  [style.--enter-delay.ms]="delay"
+  role="button"
+  tabindex="0"
+  [attr.aria-label]="
+    value === null
+      ? 'Empty cell ' + (index + 1) + '. Press to play.'
+      : 'Cell ' + (index + 1) + ' contains ' + value
+  "
+  (click)="onActivate()"
+  (keydown)="onKey($event)"
+>
+  <!-- X glyph: two diagonal strokes that "draw" via stroke-dasharray -->
+  <svg
+    *ngIf="value === 'X'"
+    class="glyph glyph--x"
+    viewBox="0 0 100 100"
+    aria-hidden="true"
+  >
+    <path d="M22 22 L78 78" />
+    <path d="M78 22 L22 78" />
+  </svg>
+
+  <!-- O glyph: a single circle with the same draw-in effect -->
+  <svg
+    *ngIf="value === 'O'"
+    class="glyph glyph--o"
+    viewBox="0 0 100 100"
+    aria-hidden="true"
+  >
+    <circle cx="50" cy="50" r="30" />
+  </svg>
+
+  <!-- subtle position label on empty cells -->
+  <span *ngIf="value === null" class="cell__label" aria-hidden="true">
+    {{ index + 1 }}
+  </span>
+</div>

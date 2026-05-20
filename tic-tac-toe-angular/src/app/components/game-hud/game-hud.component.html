@@ -1,0 +1,60 @@
+<div class="hud">
+  <!-- Whose turn / status banner -->
+  <div class="hud__turn" [class.hud__turn--over]="state.status === 'won' || state.status === 'draw'">
+    <span class="eyebrow">{{
+      state.status === 'idle' ? 'Ready' :
+      state.status === 'playing' ? 'In play' :
+      state.status === 'won' ? 'Round over' : 'No winner'
+    }}</span>
+
+    <div class="hud__turn-row">
+      <ng-container [ngSwitch]="state.status">
+        <p *ngSwitchCase="'won'" class="hud__line">
+          <em>{{ state.winner }}</em> takes the round.
+        </p>
+        <p *ngSwitchCase="'draw'" class="hud__line">
+          The board is full. <em>A draw.</em>
+        </p>
+        <p *ngSwitchDefault class="hud__line">
+          <em>{{ state.currentPlayer }}</em>’s turn
+          <span class="hud__line-sub">— move {{ state.moveCount + 1 }} of 9</span>
+        </p>
+      </ng-container>
+    </div>
+  </div>
+
+  <!-- Live timer in monospace numerals -->
+  <div class="hud__timer" aria-live="off">
+    <span class="eyebrow">Elapsed</span>
+    <span class="hud__clock" [attr.data-running]="state.status === 'playing'">
+      {{ elapsed }}
+    </span>
+  </div>
+
+  <!-- Running scoreboard -->
+  <div class="hud__scores" aria-label="Running scores">
+    <div class="hud__score hud__score--x">
+      <span class="hud__score-label">X</span>
+      <span class="hud__score-value">{{ scores.x }}</span>
+    </div>
+    <div class="hud__score hud__score--draw">
+      <span class="hud__score-label">Draws</span>
+      <span class="hud__score-value">{{ scores.draws }}</span>
+    </div>
+    <div class="hud__score hud__score--o">
+      <span class="hud__score-label">O</span>
+      <span class="hud__score-value">{{ scores.o }}</span>
+    </div>
+  </div>
+
+  <!-- Action -->
+  <div class="hud__action">
+    <app-button variant="outline" size="md" (press)="onRestart()">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+        <path d="M3 12a9 9 0 1 0 3-6.7" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        <path d="M3 4v6h6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      Restart round
+    </app-button>
+  </div>
+</div>

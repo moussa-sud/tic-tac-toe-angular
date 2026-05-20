@@ -1,0 +1,37 @@
+:host { display: block; }
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+  padding: 20px;
+  background: var(--paper-2);
+  border-radius: var(--r-xl);
+  box-shadow:
+    var(--shadow-lg),
+    inset 0 0 0 1px var(--line-soft);
+  position: relative;
+
+  /* deep blue inner frame — subtle "matted" feel */
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 8px;
+    border-radius: calc(var(--r-xl) - 8px);
+    background:
+      linear-gradient(180deg, transparent 0%, rgba(10,31,92,0.025) 100%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  > * { position: relative; z-index: 1; }
+
+  &--locked {
+    opacity: 0.94;
+  }
+}
+
+/* Slightly tighter gap on narrow screens to keep board sized well */
+@media (max-width: 480px) {
+  .grid { gap: 10px; padding: 14px; border-radius: var(--r-lg); }
+}

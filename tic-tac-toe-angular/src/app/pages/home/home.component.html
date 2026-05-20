@@ -1,0 +1,71 @@
+<section class="hero shell">
+  <div class="hero__col hero__col--copy">
+    <span class="eyebrow">Vol. 01 — A study in three-by-three</span>
+
+    <h1 class="hero__title">
+      The oldest <em>game</em>
+      <span class="hero__title-line">on a quiet <em>grid</em>.</span>
+    </h1>
+
+    <p class="hero__lede">
+      Two marks. Nine cells. Eight ways to win. <br/>
+      A familiar pastime, re-set in editorial proportions —
+      hand-drawn glyphs on warm paper, with a running tally
+      that refuses to forget.
+    </p>
+
+    <div class="hero__actions">
+      <app-button variant="primary" size="lg" (press)="start()">
+        Start a round
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <path d="M5 12h14M13 5l7 7-7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </app-button>
+      <app-button variant="ghost" size="lg" (press)="viewScores()">
+        View tally
+      </app-button>
+    </div>
+
+    <ul class="hero__rules" aria-label="Game rules">
+      <li><span>01</span> Players alternate, X opening the round.</li>
+      <li><span>02</span> A line of three of one mark — row, column, or diagonal — wins.</li>
+      <li><span>03</span> A full board with no line is a draw.</li>
+    </ul>
+  </div>
+
+  <!-- Right column: editorial illustration of an in-progress game -->
+  <aside class="hero__col hero__col--art" aria-hidden="true">
+    <div class="plate">
+      <svg viewBox="0 0 320 320" class="plate__svg">
+        <!-- thin gridlines -->
+        <g stroke="rgba(10,20,40,0.16)" stroke-width="1.5" stroke-linecap="round">
+          <path d="M110 30 L110 290"/>
+          <path d="M210 30 L210 290"/>
+          <path d="M30 110 L290 110"/>
+          <path d="M30 210 L290 210"/>
+        </g>
+
+        <!-- X marks in terracotta -->
+        <g stroke="#d96a5a" stroke-width="9" stroke-linecap="round">
+          <path d="M50 50 L90 90 M90 50 L50 90"/>
+          <path d="M250 150 L290 190 M290 150 L250 190"/>
+        </g>
+
+        <!-- O marks in deep blue -->
+        <g stroke="#1e3a8a" stroke-width="8" fill="none">
+          <circle cx="160" cy="160" r="22"/>
+          <circle cx="70" cy="260" r="22"/>
+        </g>
+
+        <!-- winning diagonal stroke through the middle -->
+        <path d="M60 60 L260 260" stroke="#c9a86a" stroke-width="4"
+              stroke-linecap="round" stroke-dasharray="6 8" opacity="0.55"/>
+      </svg>
+
+      <div class="plate__caption">
+        <span class="eyebrow">Fig. 01</span>
+        <p>A mid-round configuration. Diagonals favor the patient.</p>
+      </div>
+    </div>
+  </aside>
+</section>

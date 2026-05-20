@@ -1,0 +1,12 @@
+<div class="grid" [class.grid--locked]="locked">
+  <!-- 9 cells driven by the board array -->
+  <app-cell
+    *ngFor="let value of board; let i = index; trackBy: trackByIndex"
+    [value]="value"
+    [index]="i"
+    [winning]="isWinning(i)"
+    [disabled]="locked || value !== null"
+    [delay]="enterDelay(i)"
+    (pick)="onPick($event)"
+  />
+</div>
