@@ -1,0 +1,8 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "framework": null,
+  "installCommand": "cd tic-tac-toe-angular && npm install",
+  "buildCommand": "cd tic-tac-toe-angular && npm run build",
+  "outputDirectory": "tic-tac-toe-angular/dist/tic-tac-toe-angular/browser",
+  "rewrites": [{ "source": "/(.*)", "destination": "/index.html" }]
+}
